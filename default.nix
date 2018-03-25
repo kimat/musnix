@@ -40,57 +40,57 @@ let
         then kernelConfigLatencyTOP
         else "";
 
-in rec {
+in {
 
   linux_3_18_rt = super.callPackage ./pkgs/os-specific/linux/kernel/linux-3.18-rt.nix {
-    kernelPatches = [ super.kernelPatches.bridge_stp_helper
-                      realtimePatches.realtimePatch_3_18
+    kernelPatches = [ self.kernelPatches.bridge_stp_helper
+                      self.realtimePatches.realtimePatch_3_18
                     ];
     extraConfig   = musnixRealtimeKernelExtraConfig {};
   };
 
   linux_4_1_rt = super.callPackage ./pkgs/os-specific/linux/kernel/linux-4.1-rt.nix {
-    kernelPatches = [ super.kernelPatches.bridge_stp_helper
-                      realtimePatches.realtimePatch_4_1
+    kernelPatches = [ self.kernelPatches.bridge_stp_helper
+                      self.realtimePatches.realtimePatch_4_1
                     ];
     extraConfig   = musnixRealtimeKernelExtraConfig {};
   };
 
   linux_4_4_rt = super.callPackage ./pkgs/os-specific/linux/kernel/linux-4.4-rt.nix {
-    kernelPatches = [ super.kernelPatches.bridge_stp_helper
-                      realtimePatches.realtimePatch_4_4
+    kernelPatches = [ self.kernelPatches.bridge_stp_helper
+                      self.realtimePatches.realtimePatch_4_4
                     ];
     extraConfig   = musnixRealtimeKernelExtraConfig {};
   };
 
   linux_4_9_rt = super.callPackage ./pkgs/os-specific/linux/kernel/linux-4.9-rt.nix {
-    kernelPatches = [ super.kernelPatches.bridge_stp_helper
-                      super.kernelPatches.modinst_arg_list_too_long
-                      realtimePatches.realtimePatch_4_9
+    kernelPatches = [ self.kernelPatches.bridge_stp_helper
+                      self.kernelPatches.modinst_arg_list_too_long
+                      self.realtimePatches.realtimePatch_4_9
                     ];
     extraConfig   = musnixRealtimeKernelExtraConfig {};
   };
 
   linux_4_11_rt = super.callPackage ./pkgs/os-specific/linux/kernel/linux-4.11-rt.nix {
-    kernelPatches = [ super.kernelPatches.bridge_stp_helper
-                      super.kernelPatches.modinst_arg_list_too_long
-                      realtimePatches.realtimePatch_4_11
+    kernelPatches = [ self.kernelPatches.bridge_stp_helper
+                      self.kernelPatches.modinst_arg_list_too_long
+                      self.realtimePatches.realtimePatch_4_11
                     ];
     extraConfig   = musnixRealtimeKernelExtraConfig {};
   };
 
   linux_4_13_rt = super.callPackage ./pkgs/os-specific/linux/kernel/linux-4.13-rt.nix {
-    kernelPatches = [ super.kernelPatches.bridge_stp_helper
-                      super.kernelPatches.modinst_arg_list_too_long
-                      realtimePatches.realtimePatch_4_13
+    kernelPatches = [ self.kernelPatches.bridge_stp_helper
+                      self.kernelPatches.modinst_arg_list_too_long
+                      self.realtimePatches.realtimePatch_4_13
                     ];
     extraConfig   = musnixRealtimeKernelExtraConfig {};
   };
 
   linux_4_14_rt = super.callPackage ./pkgs/os-specific/linux/kernel/linux-4.14-rt.nix {
-    kernelPatches = [ super.kernelPatches.bridge_stp_helper
-                      super.kernelPatches.modinst_arg_list_too_long
-                      realtimePatches.realtimePatch_4_14
+    kernelPatches = [ self.kernelPatches.bridge_stp_helper
+                      self.kernelPatches.modinst_arg_list_too_long
+                      self.realtimePatches.realtimePatch_4_14
                     ];
     extraConfig   = musnixRealtimeKernelExtraConfig {};
   };
@@ -99,16 +99,16 @@ in rec {
     extraConfig = musnixStandardKernelExtraConfig {};
   };
 
-  linuxPackages_3_18_rt = super.recurseIntoAttrs (super.linuxPackagesFor linux_3_18_rt);
-  linuxPackages_4_1_rt  = super.recurseIntoAttrs (super.linuxPackagesFor linux_4_1_rt);
-  linuxPackages_4_4_rt  = super.recurseIntoAttrs (super.linuxPackagesFor linux_4_4_rt);
-  linuxPackages_4_9_rt  = super.recurseIntoAttrs (super.linuxPackagesFor linux_4_9_rt);
-  linuxPackages_4_11_rt = super.recurseIntoAttrs (super.linuxPackagesFor linux_4_11_rt);
-  linuxPackages_4_13_rt = super.recurseIntoAttrs (super.linuxPackagesFor linux_4_13_rt);
-  linuxPackages_4_14_rt = super.recurseIntoAttrs (super.linuxPackagesFor linux_4_14_rt);
-  linuxPackages_opt     = super.recurseIntoAttrs (super.linuxPackagesFor linux_opt);
+  linuxPackages_3_18_rt = super.recurseIntoAttrs (super.linuxPackagesFor self.linux_3_18_rt);
+  linuxPackages_4_1_rt  = super.recurseIntoAttrs (super.linuxPackagesFor self.linux_4_1_rt);
+  linuxPackages_4_4_rt  = super.recurseIntoAttrs (super.linuxPackagesFor self.linux_4_4_rt);
+  linuxPackages_4_9_rt  = super.recurseIntoAttrs (super.linuxPackagesFor self.linux_4_9_rt);
+  linuxPackages_4_11_rt = super.recurseIntoAttrs (super.linuxPackagesFor self.linux_4_11_rt);
+  linuxPackages_4_13_rt = super.recurseIntoAttrs (super.linuxPackagesFor self.linux_4_13_rt);
+  linuxPackages_4_14_rt = super.recurseIntoAttrs (super.linuxPackagesFor self.linux_4_14_rt);
+  linuxPackages_opt     = super.recurseIntoAttrs (super.linuxPackagesFor self.linux_opt);
 
-  linuxPackages_latest_rt = linuxPackages_4_14_rt;
+  linuxPackages_latest_rt = self.linuxPackages_4_14_rt;
 
   realtimePatches = super.callPackage ./pkgs/os-specific/linux/kernel/patches.nix {};
 }
