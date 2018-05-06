@@ -1,7 +1,10 @@
 let
   pkgs = import <nixpkgs> { overlays = [ (import ./default.nix) ]; };
 
+  tests = import ./tests/default.nix;
+
   jobs = rec {
+    loginTest     = tests.loginTest;
     linux_3_18_rt = pkgs.linux_3_18_rt;
     linux_4_1_rt  = pkgs.linux_4_1_rt;
     linux_4_4_rt  = pkgs.linux_4_4_rt;
